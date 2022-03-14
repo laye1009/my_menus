@@ -138,7 +138,8 @@ class Menus extends Fixture
             $author = $customers[$i];
             $comment->setAuthor($author)
                 ->setCOrder($order)
-                ->setComment($faker->sentence(20));
+                ->setComment($faker->sentence(20))
+                ->setRating($faker->numberBetween(1,5));
             $comments[] = $comment;
             $manager->persist($comment);
             $manager->flush();
