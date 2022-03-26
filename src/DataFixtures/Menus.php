@@ -124,10 +124,14 @@ class Menus extends Fixture
         for($i=0;$i<20;$i++) {
             $order = new Orders();
             $order->setCustomer($customers[$faker->numberBetween(1,count($clients)-1)])
-                ->setQuantite($faker->numberBetween(1,5))
-                ->setOrderDate($faker->datetime());
-            $orders[] = $order;
+                ->setQuantite($faker->numberBetween(1,5));
+            $order->setOrderDate($faker->datetime());
+            $order->addItem($items[$faker->numberBetween(0,count($items)-1)]);
+            /*for($i=0; $i<$faker->numberBetween(0,4);$i++) {
+                //$ordered[] = $items[$faker->numberBetween(0,count($items))];
+            }*/
             $manager->persist($order);
+            $orders[] = $order;
             $manager->flush();
         }
 

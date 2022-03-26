@@ -20,6 +20,20 @@ class CommentsRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Comments::class);
     }
+    /**
+     * get by c_order_id
+     */
+    public function getOrderId($v)
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c.rating')
+            ->andWhere('c.c_order = :val')
+            ->setParameter('val', $v)
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getArrayResult()
+        ;
+    }
 
     /**
      * @throws ORMException

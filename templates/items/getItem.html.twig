@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-6 ml-10">
+                <img style="width:100%;height:100%" src="{{asset('images/' ~ item.image)}}">
+            </div>
+            <div class="col-3">
+                <p style="margin-top: 50%;"="mt-20">
+                    <h3> Description</h3>
+                    {{item.description}}
+                </p>
+            </div>
+            {% include 'items/panier.html.twig'%}
+        </div>
+        <h4 style="margin-bottom:10vh;text-decoration:underline;">Liste des commandes de ce produit</h4>
+        {% if commandes is empty %}
+            <p> Il n'existe pas de commandes de ce produit </p>
+            {% else %}
+            {% for cm in commandes %}
+                {% set i = 0 %}
+                {% if notes | length > 0 %}
+                    {% set nt = notes[i]['rating'] %}
+                {% endif %}
+                
+                <div class="row">
+                    <div class="col-4">
+                        <img style="width:50%;height:50%" src="{{asset('images/' ~ item.image)}}">
+                    </div>
+                    <div class="col-4">
+                        <p>Date commande: {{cm.order_date|date('Y-m-d')}}</p>
+                        <p>Quantité: {{cm.quantite }}</p>
+                        <p>Note: 
+                            {% if nt is defined %}
+                                {% for j in 1..nt %}
+                                    <span style="color:orange;" class="fa fa-star"></span>
+                                {% endfor %}
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+                {% set i = i+1 %}
+                <hr>
+                {#{{dump(cm)}}#}
+            {% endfor %}
+        {% endif %}
+        
+    </div>
+    <div id="test">
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        console.log(document.getElementById('divnb'));
+        
+
+        function alerte(id){
+            if(sessionStorage.getItem("panier")==null)
+            {
+                sessionStorage.setItem("panier",id);
+                return;
+            }
+            var panier = sessionStorage.getItem("panier").split();
+            
+            if(panier.indexOf(id)==-1)
+            {
+                sessionStorage.removeItem("panier");
+                panier.push(id);
+                panier.filter((v,i,s)=>s.indexOf(v)===i);
+                sessionStorage.setItem("panier",panier);
+            }
+            console.log(sessionStorage.getItem("panier",panier));
+            var nb = panier.length;
+            //console.log(document.getElementById('nb'));
+            document.getElementById('nb').textContent = nb; 
+        }
+        console.log(document.getElementById("test"));
+
+    </script>
+
+{% endblock %}
