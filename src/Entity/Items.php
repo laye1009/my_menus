@@ -111,7 +111,7 @@ class Items
     {
         return $this->id;
     }
-    public function Name()
+    public function getName()
     {
         return $this->name;
     }

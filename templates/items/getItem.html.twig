@@ -54,31 +54,93 @@
 
 {% block javascripts %}
     <script>
-        console.log(document.getElementById('divnb'));
-        
-
-        function alerte(id){
-            if(sessionStorage.getItem("panier")==null)
+        $(document).ready(function()
+        {
+            /*
+            if (sessionStorage.getItem('panier'))
             {
-                sessionStorage.setItem("panier",id);
-                return;
-            }
-            var panier = sessionStorage.getItem("panier").split();
-            
-            if(panier.indexOf(id)==-1)
-            {
-                sessionStorage.removeItem("panier");
-                panier.push(id);
-                panier.filter((v,i,s)=>s.indexOf(v)===i);
-                sessionStorage.setItem("panier",panier);
-            }
-            console.log(sessionStorage.getItem("panier",panier));
-            var nb = panier.length;
-            //console.log(document.getElementById('nb'));
-            document.getElementById('nb').textContent = nb; 
-        }
-        console.log(document.getElementById("test"));
+                $('divnb').append("<span>Nombre d\'articles:</span><span id='nb'> </span>\
+                <span style='position:absolute;left:80%' class='fa fa-shopping-cart'></div>\
+                <a href=''><span class='badge badge-warning'>voir le panier</span></a>");
+            }*/
+            $('#voir').on("click",function(){
+                event.preventDefault();
+                var ids = sessionStorage.getItem("panier");
+                /*
+                var id_item = ids.split();
+                id_item.filter((v,i,s)=>{s.indexOf(v)==i});
+                var id_item = JSON.stringify(id_item);
+                //console.log(id_item);
+                //console.log(id_item);
+                /*id_item.forEach(e=>{
+                    ido['id'+e] = e;
+                });*/
+                //console.log(this.data('voir'));
+                $.ajax({
+                    url: "/panier/voir",
+                    type: "POST",
+                    data: {'id':ids},
+                    success: function (data) {
+                        $('#voirpanier').html('');
+                        var html="<table><thead>\
+                            <tr><th>Liste de produits à commander</th></tr>\
+                            <tr><th class='ml:10'>Name</th><th class='text-center'>Description</th>\
+                                <th style='margin-left:15px;'>Action</th></thead>";
+                            html+="<tbody>";
+                        //var output= data.substr(1,data.length-2);
+                        var output = JSON.parse(data);
+                        console.log(output);
+                        //console.log(Array.from(data)[0]);
+                        //$('#voirpanier').html(data);
+                        for(var i=0;i<output.length;i++)
+                        {
+                            html+="<tr><td>"+output[i].name+"</td>";
+                            html+="<td>"+output[i].description+"</td>";
+                            html+="<td id='suppr'>\
+                                <a style='margin-left:15px;' class='fa fa-trash'></a>\
+                                </td></tr>";
+                        } 
+                        html+="</tbody></table>";
+                        //console.log(html);
+                        $('#voirpanier').append(html);
 
+                        $('#voirpanier').dialog({
+                            modal:true,
+                            width:600,
+                            height:300,
+                            buttons: {
+                            'Commander': function () {
+                                alert('Votre commande est passée');
+                                jQuery(this).dialog("close");
+                            }}
+                        });
+                    }
+                });
+            }); // fin ajax
+            $("#ajout").on("click",function(){
+                //console.log($('#ajout').data('ajout'));
+                var id = $('#ajout').data('ajout');
+                if(sessionStorage.getItem("panier")==null)
+                {
+                    sessionStorage.setItem("panier",id);
+                    return;
+                }
+                var panier = sessionStorage.getItem("panier").split();
+                
+                if(panier.indexOf(id)==-1)
+                {
+                    sessionStorage.removeItem("panier");
+                    panier.push(id);
+                    panier.filter((v,i,s)=>s.indexOf(v)===i);
+                    sessionStorage.setItem("panier",panier);
+                }
+                //console.log(sessionStorage.getItem("panier",panier));
+                var nb = panier.length;
+                //console.log(document.getElementById('nb'));
+                document.getElementById('nb').textContent = nb; 
+
+            });
+        }); // fin ready function
     </script>
 
 {% endblock %}

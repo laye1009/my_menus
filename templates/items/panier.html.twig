@@ -1,18 +1,19 @@
-<div class="col-2">
+<div style="margin-top:40px" class="col-3">
     <p>
-        <button style="margin-top: 50%;" 
-        class="btn btn-warning" onclick="alerte('{{item.id}}')">
+        <button id="ajout" style="margin-top: 50%;" 
+        class="btn btn-warning" data-ajout = "{{item.id}}">
             Ajouter au panier 
         </button>
     </p>
     <div id="divnb">
         <span >Nombre d'articles:</span>
-        <span id="nb">0
+        <span id="nb">
         </span>
-        <span style="position:absolute;" class="fa fa-shopping-cart"></div>
+        <span style="position:absolute;" class="fa fa-shpping-cart"></div>
         <a href="">
-            <span class="badge badge-warning">voir le panier</span>
+            <span id="voir" class="badge badge-warning" data-voir="voir">voir le panier</span>
         </a>
-
+        <div id="voirpanier"></div>
     </div>
+    
 </div>

@@ -53,6 +53,50 @@ class ItemsController extends AbstractController
             'notes'=>$notes,
         ]);
     }
+
+    /**
+     * @Route("/panier/voir",name="show_panier")
+     */
+
+     public function voirPanier(ItemsRepository $itemRepo,Request $request)
+     {
+        $form = $request->request;
+        $para = $form->get('id');
+        $para = explode(",",$para);
+        $para = array_unique($para);
+        $result=array();
+        /*
+        $output = '<table>
+        <thead>
+        <tr>
+        <th>Name</th><th>Description></th>
+        </tr></thead>';
+        $output.='<tbody>';*/
+        for($i=0;$i<count($para);$i++)
+        {
+            $item = $itemRepo->findOneBy(array('id'=>$para[$i]));
+            //$output.='<tr>';
+            
+            //$item = $itemRepo->findOneBy(array('id'=>$para[$i]));
+            $result[$i]['name']=$item->getName();
+            $result[$i]['description']=$item->getDescription();
+            $result[$i]['prix']=$item->getPrice();
+            /*$output.='<td>'.$item->getName().'</td><td>'.$item->getDescription().'</td>';
+            $output.='</tr>';
+            //$result[$i] = $i; */
+        }
+        /*$output.='</tbody></table>';
+        $result[count($para)]['output'] = $output;*/
+        
+        //$res=$this->get('normaliser')->normalize($result);
+        
+        return new Response(json_encode($result));
+        //return new Response(json_encode($result));
+        //return new JsonResponse($res);
+        //var_dump($para);die();
+        //echo new JsonResponse($response);
+        //return new JsonResponse($response);
+     }
     /*
     public function panier(Comments $comment,Items $item, SessionInterface $session)
     {
