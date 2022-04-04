@@ -23,6 +23,7 @@ class ItemsType extends AbstractType
             ->add('description',TextareaType::class)
             ->add('price',MoneyType::class)
             ->add('image',FileType::class,[
+                'required'=>false,
                 'mapped'=>false])
             ->add('category',IntegerType::class)
         ;

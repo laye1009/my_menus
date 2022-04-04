@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <style>
+        tr:nth-child(even) { 
+        background-color: Lightgrey; 
+        } 
+        td {
+            text-align: center;
+            width: 20%;
+        }
+        table {
+            margin-top: 10%;
+        }
+        thead{
+            font-weight: bold;
+            text-decoration: underline;
+            background-color: lightgrey;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Description</th>
+                    <th>Prix</th>
+                    <th>Image</th>
+                    <th>Catégorie</th>
+                    <th class="ml-10">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.description }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>{{ item.image }}</td>
+                        <td>{{ item.category}}</td>
+                        <td>
+                            <span>
+                                <a href="{{path('admin_edit',{id:item.id})}}" class="glyphicon glyphicon-pencil"></a>
+                            </span>
+                            <span>
+                                <a href="{{path('admin_delete',{id : item.id})}}" class="glyphicon glyphicon-trash"></a>
+                            </span>
+                        </td>
+                    </tr>
+                {% endfor %}
+                
+            </tbody>
+        </table>
+        {{ knp_pagination_render(items) }}
+
+
+    </div>
+{% endblock %}
