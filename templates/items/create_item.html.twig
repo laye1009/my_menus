@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    
+    <div class="container">
+        <h3 class="text-center" style="margin-top:30px;margin-bottom:30px;">
+            Renseigner les informations du produit
+        </h3>
+        {{form_start(form)}}
+        <div class="row">
+            <div class="col-3">
+            </div>
+            <div class="col-4">
+                {{form_row(form.name)}}
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-3">
+            </div>
+            <div class="col-4">
+                {{form_row(form.description)}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+            </div>
+            <div class="col-4">
+                {{form_row(form.price)}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+            </div>
+            <div class="col-4">
+                {{form_row(form.image)}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+            </div>
+            <div class="col-4">
+                {{form_row(form.category)}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+            </div>
+            <div class="col-6">
+                <button type="submit">Créer</button>
+            </div>
+        </div>
+        {{form_end(form)}}
+    </div>
+    
+    {#{{form_start(form)}}
+         {{form_widget(form)}} 
+    {{form_end(form)}}#}
+    
+
+{% endblock %}

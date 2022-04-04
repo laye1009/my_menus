@@ -28,6 +28,13 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {% block body %}
+            {% for messsage in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {# {{message}} #}
+                    {{dump(app.flashes())}}
+                </div>
+            {% endfor %}
+        {% endblock %}
     </body>
 </html>

@@ -3,13 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Items;
+use App\Form\ItemsType;
 use App\Entity\Comments;
+use App\Service\UploaderHelper;
 use App\Repository\ItemsRepository;
 use App\Repository\CommentsRepository;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -51,6 +54,32 @@ class ItemsController extends AbstractController
             'item' => $item,
             'commandes'=>$commandes,
             'notes'=>$notes,
+        ]);
+    }
+    /**
+     * @Route("/item/create",name="item_create")
+     */
+
+    public function createItem(UploaderHelper $uploader,Request $request,ObjectManager $manager,SluggerInterface $slug)
+    {
+        $item = new Items();
+        $form = $this->createForm(ItemsType::class,$item);
+        $form->handleRequest($request);
+        $image = $form->get('image')->getData();
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $newsafename=$uploader->upload($slug,$image);
+            $item->setImage($newsafename);
+            $manager->persist($item);
+            $manager->flush();
+            $this->addFlash("success","Le produit a été ajouté");
+            return $this->redirectToRoute('home');
+        }
+
+        
+
+        return $this->render('items/create_item.html.twig',[
+            'form'=>$form->createView()
         ]);
     }
 

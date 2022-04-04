@@ -63,6 +63,7 @@
                 <span style='position:absolute;left:80%' class='fa fa-shopping-cart'></div>\
                 <a href=''><span class='badge badge-warning'>voir le panier</span></a>");
             }*/
+            $('#nb').text(sessionStorage.getItem('panier').split(',').length);
             $('#voir').on("click",function(){
                 event.preventDefault();
                 var ids = sessionStorage.getItem("panier");
