@@ -75,9 +75,6 @@ class ItemsController extends AbstractController
             $this->addFlash("success","Le produit a été ajouté");
             return $this->redirectToRoute('home');
         }
-
-        
-
         return $this->render('items/create_item.html.twig',[
             'form'=>$form->createView()
         ]);
