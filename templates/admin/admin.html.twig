@@ -56,6 +56,12 @@
             </tbody>
         </table>
         {{ knp_pagination_render(items) }}
+        <div class="row">
+            <div class="col-3"></div>
+            <button class="btn btn-success col-6">
+                <a href="{{path('item_create')}}" class="text-white bg-dark">Ajouter un nouveau produit</a>
+            </button>
+        </div>
 
 
     </div>

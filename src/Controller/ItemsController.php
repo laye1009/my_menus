@@ -57,30 +57,6 @@ class ItemsController extends AbstractController
         ]);
     }
     /**
-     * @Route("/item/create",name="item_create")
-     */
-
-    public function createItem(UploaderHelper $uploader,Request $request,ObjectManager $manager,SluggerInterface $slug)
-    {
-        $item = new Items();
-        $form = $this->createForm(ItemsType::class,$item);
-        $form->handleRequest($request);
-        $image = $form->get('image')->getData();
-        if($form->isSubmitted() && $form->isValid())
-        {
-            $newsafename=$uploader->upload($slug,$image);
-            $item->setImage($newsafename);
-            $manager->persist($item);
-            $manager->flush();
-            $this->addFlash("success","Le produit a été ajouté");
-            return $this->redirectToRoute('home');
-        }
-        return $this->render('items/create_item.html.twig',[
-            'form'=>$form->createView()
-        ]);
-    }
-
-    /**
      * @Route("/panier/voir",name="show_panier")
      */
 
