@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 /**
  * Customers
@@ -12,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="customers")
  * @ORM\Entity
  */
-class Customers
+class Customers implements UserInterface
 {
     /**
      * @var int
@@ -209,6 +211,27 @@ class Customers
 
         return $this;
     }
+
+    /* gestion de userinterface*/
+    public function getRoles()
+    {
+        return ['ROLE_USER'];
+    }
+    /*public function getPassword()
+    {
+        // leaving blank - I don't need/have a password!
+    }*/
+    public function getSalt()
+    {}
+    public function eraseCredentials()
+    {
+        // leaving blank - I don't need/have a password!
+    }
+    public function getUserName()
+    {
+        return $this->email;
+    }
+
 
 
 }

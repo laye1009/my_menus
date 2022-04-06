@@ -9,9 +9,14 @@ use App\Entity\Comments;
 use App\Entity\Customers;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class Menus extends Fixture
 {
+    private $passEncoder;
+    public function __construct(UserPasswordEncoderInterface $encoder){
+        $this->passEncoder = $encoder;
+    }
     public function load(ObjectManager $manager): void
     {
         $pdts = array(
@@ -99,7 +104,7 @@ class Menus extends Fixture
             $customer->setFirstName($clients[$i][1])
                 ->setLastName($clients[$i][2])
                 ->setEmail($clients[$i][3])
-                ->setPassword($clients[$i][4])
+                ->setPassword($this->passEncoder->encodePassword($customer,$clients[$i][4]))
                 ->setAvatar($picture)
                 ->setJoinDate($faker->datetime());
             $customers[] = $customer;

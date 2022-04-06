@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+        <h1 class="display-4">Bienvenue {% if app.user %}{{app.user.firstName ~' ' ~ app.user.lastName }} {% endif %}</h1>
+        <p class="lead">
+            <a href="{{ path('home') }}">Voir nos produits</a>
+        </p>
+        </div>
+    </div>
+{% endblock %}
+

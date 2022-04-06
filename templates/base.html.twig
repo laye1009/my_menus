@@ -30,6 +30,29 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
+    <header>
+        <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+              <a class="navbar-brand">Restau<br> JaayTaar</a>
+              {% if not app.user %}
+                <a class="nav-link active" aria-current="page" href="{{path('app_login')}}">Se connecter</a>
+                <a class="nav-link active" aria-current="page" href="">Créer un compte</a>
+              {% endif %}
+               {% if app.user %}
+                <a class="nav-link active" aria-current="page" href="{{path('app_logout')}}">Se déconnecter</a>
+                <span>
+                    <img style="width:30px;height:30px;" class="rounded" src="{{app.user.avatar}}">
+                </span>
+              {% endif %}
+              <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+              </form>
+            </div>
+          </nav>
+        {% block header %}
+        {% endblock %}
+    </header>
     <body>
         {% for message in app.flashes('success') %}
                 <div class="alert alert-success">
