@@ -1,6 +1,6 @@
 # my_menus
-Ceci est un projet fait maison. L'objetif est de simuler un fast food qui vend des produits en ligne.
-Framework: symfony 4.4
+Ceci est un projet personnel. L'objetif est de simuler un fast food qui vend des produits en ligne.  
+Framework: symfony 4.4  
 Base de données: sqlite3
 
 # Comment cloner et visualiser ce site
