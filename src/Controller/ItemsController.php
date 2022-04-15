@@ -41,15 +41,20 @@ class ItemsController extends AbstractController
         //var_dump($request->query->get('id'));
         $commandes=$item->getOrders();
         $cmds=array();
+        $comments=array();
+        $notes=array();
         foreach($commandes as $k=>$v){
             $cmds[] = $v->getId();
         }
         for($i=0;$i<count($cmds);$i++)
         {
-            //$comments[]=$comment->findBy([ 'c_order' => $cmds[$i] ]);
-            $notes=$comment->getOrderId($cmds[$i]);
+            $comments=$comment->findBy(['c_order' => $cmds[$i] ]);
+            foreach($comments as $c=>$v)
+            {
+                $notes[]=$v->getRating();
+            }
+            
         }
-        //var_dump($notes);die();
         return $this->render('items/getItem.html.twig', [
             'item' => $item,
             'commandes'=>$commandes,

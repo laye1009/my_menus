@@ -1,0 +1,1 @@
+$("#suppr").on("click",function(){console.log('ddd')});

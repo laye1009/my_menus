@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+
 {% block body %}
     
     <div class="container">
@@ -21,7 +22,7 @@
             {% for cm in commandes %}
                 {% set i = 0 %}
                 {% if notes | length > 0 %}
-                    {% set nt = notes[i]['rating'] %}
+                    {% set nt = notes[i] %}
                 {% endif %}
                 
                 <div class="row">
@@ -53,9 +54,13 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script>
-        $(document).ready(function()
+<script>
+    $(document).ready(function()
         {
+            if(sessionStorage.getItem('panier'))
+            {
+                $("#lib").css('display','block')
+            }
             /*
             if (sessionStorage.getItem('panier'))
             {
@@ -63,7 +68,11 @@
                 <span style='position:absolute;left:80%' class='fa fa-shopping-cart'></div>\
                 <a href=''><span class='badge badge-warning'>voir le panier</span></a>");
             }*/
-            $('#nb').text(sessionStorage.getItem('panier').split(',').length);
+            if(sessionStorage.getItem('panier')){
+                var panier = sessionStorage.getItem('panier').split(',');
+                panier.filter((v,i,s)=>s.indexOf(v)===i);
+                $('#nb').text(panier.length);
+            } 
             $('#voir').on("click",function(){
                 event.preventDefault();
                 var ids = sessionStorage.getItem("panier");
@@ -90,14 +99,14 @@
                             html+="<tbody>";
                         //var output= data.substr(1,data.length-2);
                         var output = JSON.parse(data);
-                        console.log(output);
+                        //console.log(output);
                         //console.log(Array.from(data)[0]);
                         //$('#voirpanier').html(data);
                         for(var i=0;i<output.length;i++)
                         {
-                            html+="<tr><td>"+output[i].name+"</td>";
+                            html+="<tr class='suppr'><td>"+output[i].name+"</td>";
                             html+="<td>"+output[i].description+"</td>";
-                            html+="<td id='suppr'>\
+                            html+="<td>\
                                 <a style='margin-left:15px;' class='fa fa-trash'></a>\
                                 </td></tr>";
                         } 
@@ -115,6 +124,10 @@
                                 jQuery(this).dialog("close");
                             }}
                         });
+                        $(".suppr").on('click',function(){
+                            console.log($(this).parent());
+                            $(this).remove();
+                        });
                     }
                 });
             }); // fin ajax
@@ -126,9 +139,9 @@
                     sessionStorage.setItem("panier",id);
                     return;
                 }
-                var panier = sessionStorage.getItem("panier").split();
+                var panier = sessionStorage.getItem("panier").split(',');
                 
-                if(panier.indexOf(id)==-1)
+                if(panier.indexOf(id.toString())==-1)
                 {
                     sessionStorage.removeItem("panier");
                     panier.push(id);
@@ -142,6 +155,7 @@
 
             });
         }); // fin ready function
-    </script>
+
+</script>
 
 {% endblock %}
