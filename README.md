@@ -5,9 +5,9 @@ Base de données: sqlite3
 
 # Comment cloner et visualiser ce site
 ## Lancer les commandes suivantes
-1- git clone
-2- composer install
-3- Création de la base de données
-php bin.console doctrine:datatbase:create
-4: Charger la base de données avec les fixtures 
-php bin/console doctrine:fixtures:load
+1- git clone  
+2- composer install  
+3- Création de la base de données  
+php bin.console doctrine:datatbase:create  
+4: Charger la base de données avec les fixtures  
+php bin/console doctrine:fixtures:load  
