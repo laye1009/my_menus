@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{asset('css/users.css')}}">
+{% endblock %}
+{% block body %}
+    <table>
+        <thead>
+            <th>Photo</th>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Email</th>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>
+                        <a href="{{path('show_user',{'id':user.id})}}">
+                            <img style="width:50px;height:50px;" src="{{ user.avatar }}">
+                        </a>
+                    </td>
+                    <td>{{ user.firstName }}</td>
+                    <td>{{ user.lastName }}</td>
+                    <td>{{ user.email }}</td>
+                </tr>
+            {% endfor %} 
+        </tbody>
+    </table>
+
+{% endblock %}

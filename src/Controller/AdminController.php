@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Items;
 use App\Form\ItemsType;
+use App\Entity\Customers;
 use App\Service\UploaderHelper;
 use App\Repository\ItemsRepository;
+use App\Repository\CustomersRepository;
 use Doctrine\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -94,4 +96,27 @@ class AdminController extends AbstractController
         ]);
         
     }
+
+    /**
+     * @Route("/admin/users",name="admin_users")
+     */
+
+     public function listeUsers(CustomersRepository $customerRepo){
+         $listeUsers = $customerRepo->findAll();
+         return $this->render('admin/users.html.twig',[
+             'users'=> $listeUsers,
+         ]);
+
+     }
+
+     /**
+      * @Route("/admin/users/{id}",name="show_user")
+      */
+      public function showUser(Customers $customer,CustomersRepository $custRepo)
+      {
+          //$userInfos = $custRepo->getUserInfos();
+          return $this->render('admin/show_user.html.twig',[
+              'user'=>$customer,
+          ]);
+      }
 }

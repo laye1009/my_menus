@@ -135,7 +135,7 @@ class Customers implements UserInterface
     {
         return $this->lastName;
     }
-    public function getEamil()
+    public function getEmail()
     {
         return $this->email;
     }

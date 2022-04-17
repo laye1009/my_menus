@@ -1,0 +1,10 @@
+table td,th{
+    width:400px;
+}
+
+table thead{
+    margin-bottom:20px;
+}
+tr:nth-child(even){
+    background-color: lightgrey;
+}
