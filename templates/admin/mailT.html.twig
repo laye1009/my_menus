@@ -1,17 +1,5 @@
 {% block body %}
 <div id="mail">
-    <form action="{{path('admin_mail')}}" method="POST">
-        <label for="from">From</label>
-        <input type="text" name="from">
-        <label for="to">To</label>
-        <input type="text" name="to">
-        <label for="body">Message</label>
-        <textarea name="body">
-
-        </textarea>
-        <button id="send" style="margin-top:5px;margin-left:45%;" class="btn btn-success ml_btn" type="submit">
-            Envoyer
-        </button>
-    </form>
+finalement aucun template n'est envoyé par swifmail. Ce fichier peut être supprimé
 </div>
 {% endblock %}
