@@ -34,10 +34,10 @@
     <header>
         <nav class="navbar navbar-light bg-light">
             <div class="container-fluid">
-              <a class="navbar-brand">Restau<br> JaayTaar</a>
+              <a href="{{path('app_home')}}" class="navbar-brand">Restau<br> JaayTaar</a>
               {% if not app.user %}
                 <a class="nav-link active" aria-current="page" href="{{path('app_login')}}">Se connecter</a>
-                <a class="nav-link active" aria-current="page" href="">Créer un compte</a>
+                <a class="nav-link active" aria-current="page" href="{{path('account_create')}}">Créer un compte</a>
               {% endif %}
                {% if app.user %}
                 <a class="nav-link active" aria-current="page" href="{{path('app_logout')}}">Se déconnecter</a>
@@ -55,11 +55,11 @@
         {% endblock %}
     </header>
     <body>
-        {% for message in app.flashes('success') %}
-                <div class="alert alert-success">
-                    {# {{message}} #}
-                    {{message}}
-                </div>
+        {% for key,value in app.flashes %}
+          <div class="{{'alert alert-' ~ key}}">
+              {# {{message}} #}
+              {{value[0]}}
+          </div>
         {% endfor %}
         {% block body %}
             

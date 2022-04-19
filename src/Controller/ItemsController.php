@@ -19,6 +19,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ItemsController extends AbstractController
 {
     /**
+     * @Route("/",name="accueil")
+     */
+    public function accueil()
+    {
+        return $this->render('index.html.twig');
+    }
+    /**
     * @Route("/items", name="home")
     */
 

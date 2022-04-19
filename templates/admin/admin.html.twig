@@ -4,6 +4,9 @@
         tr:nth-child(even) { 
         background-color: Lightgrey; 
         } 
+        thead tr th{
+            text-align:center;
+        }
         td {
             text-align: center;
             width: 20%;
@@ -44,10 +47,14 @@
                         <td>{{ item.category}}</td>
                         <td>
                             <span>
-                                <a href="{{path('admin_edit',{id:item.id})}}" class="glyphicon glyphicon-pencil"></a>
+                                <a href="{{path('admin_edit',{'id':item.id})}}">
+                                    <img style="width:20px;height:20px;" src="{{asset('images/autres/pencil.png')}}">
+                                </a>
                             </span>
                             <span>
-                                <a href="{{path('admin_delete',{id : item.id})}}" class="glyphicon glyphicon-trash"></a>
+                                <a href="{{path('admin_delete',{'id':item.id})}}">
+                                    <img style="width:20px;height:20px;" src="{{asset('images/autres/trash.png')}}"></a>
+                                </a>
                             </span>
                         </td>
                     </tr>
@@ -62,7 +69,5 @@
                 <a href="{{path('item_create')}}" class="text-white bg-dark">Ajouter un nouveau produit</a>
             </button>
         </div>
-
-
     </div>
 {% endblock %}

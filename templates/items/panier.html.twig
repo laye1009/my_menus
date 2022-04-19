@@ -6,9 +6,13 @@
         </button>
     </p>
     <div id="divnb">
-        <span id="lib" style="display:none;">Nombre d'articles:</span>
-        <div id="nb">
-            <span class="fa fa-shpping-cart"></span>
+        
+        <div id="lib" style="position:relative;display:none;height:70px;text-align:center;background-color:rgb(0,0,0,0.5);">
+            <span style="color:white;">Nombre d'articles:</span>
+            <p>
+                <img style="position:absolute;width:35px;height:25px;z-index:0;margin-top:10px;" src="{{asset('images/shopping.png')}}">
+                <span style="position: relative;z-index:500;top:0;font-size:2.5em;height:100%;" id="nb"></span>
+            </p>
         </div>
         {# <span style="position:absolute;" class="fa fa-shpping-cart"></div> #}
         <a href="">

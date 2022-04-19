@@ -8,6 +8,13 @@
             <a href="{{ path('home') }}">Voir nos produits</a>
         </p>
         </div>
+        <div style="padding-left: 86px;">
+            <div style="font-size: 3.5rem;font-weight:300;">Espace réservé à l'administrateur</div>
+            <ul style="list-style: none;">
+                <li><a href="{{path('app_admin')}}">Gestion des produits</a></li>
+                <li><a href="{{path('admin_users')}}">Gestion des clients</a></li>
+            </ul>
+        </div>
     </div>
 {% endblock %}
 

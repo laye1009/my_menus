@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div style="padding:100px 500px;">
+    <form action ="{{path('account_create')}}" method="POST">
+        <label for="firstname">First Name:</label><input type="text" name="firstname"><br>
+        <label for="lastname">Last Name:</label> <input type="text" name="lastname"><br>
+        <label for="email">Email</label><br><input type="text" name="email"><br>
+        <label for="password">Password:</label><input type="password" name="password"><br>
+        <label for="passwordConf">Confirm Password:</label> <input type="password" name="passwordConf"><br>
+        <span id="pc" class="bage badge-warning">Les deux mots de passe ne correspondent pas!</span><br>
+        
+        <button class="btn btn-success mt-3" type="submit">Créer</button>
+    </form>
+</div>
+
+{% endblock %}
+{% block javascripts %}
+<script>
+    $(document).ready(function(){
+        $("input[name=passwordConf]").on('keyup',function(){
+            var pwd = $('input[name=password]').val();
+            var pwdcf = $(this).val();
+            if(pwdcf.length == pwd.length && pwd !=pwdcf)
+            {
+                $("#pc").css('visibility','visible');
+            } else {$("#pc").css('visibility','hidden');}
+        });
+    })
+</script>
+{% endblock %}
+{% block stylesheets %}
+<style>
+    .badge-warning{
+        font-size:0.7em;
+        font-style: italic;
+    }
+    #pc{
+        visibility: hidden;
+    }
+</style>
+{% endblock %}

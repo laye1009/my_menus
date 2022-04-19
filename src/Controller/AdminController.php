@@ -13,6 +13,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminController extends AbstractController
@@ -61,6 +62,7 @@ class AdminController extends AbstractController
     {
         $em->remove($item);
         $em->flush();
+        $this->addFlash('danger',"Le produit a été supprimé");
         return $this->redirectToRoute('app_admin');
         
 
@@ -118,5 +120,26 @@ class AdminController extends AbstractController
           return $this->render('admin/show_user.html.twig',[
               'user'=>$customer,
           ]);
+      }
+
+      /**
+       * @Route("admin/mail", name="admin_mail")
+       */
+      public function mailSend(\Swift_Mailer $mailer,Request $request){
+          $to = $request->get('to');
+          $from = $request->get('from');
+          $body = $request->get('body');
+          $id = $request->get('id');
+          $message= (new \Swift_Message())
+            ->setFrom($from)
+            ->setTo($to)
+            ->setBody($body,'text/html')
+            ;
+            //setBody('<p>Coucou</p>,'text/html');
+          //var_dump($mailer);die();
+          $mailer->send($message);
+          $this->addFlash('success','Votre message a été envoyé');
+          return $this->redirectToRoute('show_user',array('id'=>$id));
+
       }
 }

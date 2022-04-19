@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 
+
 {% block body %}
     <div class="row mt-5">
         <div class="col-3">
@@ -18,12 +19,61 @@
         </div>
     </div>
     <div style="text-align: center;">
-        <button class="btn btn-success">
-            <a class="text-white" href="#">
+        <a id="envoi">
+            <button data-to="{{user.email}}" id="envoi" class="btn btn-success">
                 Envoyer un mail
-            </a>
-        </button>
-
+            </button>
+        </a>
     </div>
+    
+    <div id="mail">
+        <form action="{{path('admin_mail')}}" method="POST">
+            <label for="from">From</label>
+            <input type="hidden" name="id" value="{{user.id}}">
+            <input type="text" name="from">
+            <label for="to">To</label>
+            <input type="text" name="to" value="{{user.email}}">
+            <label for="body">Message</label>
+            <textarea name="body">
+
+            </textarea>
+            <button id="send" style="margin-top:5px;margin-left:45%;" class="btn btn-success ml_btn" type="submit">
+                Envoyer
+            </button>
+        </form>
+    </div>
+    
+
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $(document).ready(function(){
+            $("#envoi").on("click",function(){
+                $('#mail').css('visibility','visible');
+                $('#mail').dialog({
+                    modal:true,
+                    witdth:500,
+                    height:500,
+                });
+            });
+        });
+    </script>
+{% endblock %}
+{% block stylesheets %} 
+    <style>
+        #mail {
+            width:1000px;
+            padding-left: 10%;
+            padding-right: 10%;
+            visibility: hidden;
+        }
+        #mail input{
+            width:100%;
+        }
+        #mail textarea{
+            width:100%;
+            height:300px;
+        }
+    </style>
 
 {% endblock %}
