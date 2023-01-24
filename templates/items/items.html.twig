@@ -1,7 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block stylesheets %}
-<link rel='stylesheet' href="{{asset('css/items.css')}} ">
-{% endblock %}
+
 
 {% block title %}Nos produits{% endblock %}
 
@@ -11,19 +9,203 @@
             {% for pd in items %}
                 <div class="col-4">
                     <div class="card mt-5">
-                        <a href="{{path('show_item',{id:pd.id}) }}">
+                        <div>
                             <div class="card-header">
                                 <h5 class="text-center">{{pd.name }}</h5>
                             </div>
                             <div class="card-body">
-                                <p class="card-text text-center">
+                                <p class="card-text text-center" id = "added-{{pd.id}}">
+                                    <div id="added-item-{{pd.id}}"><span class= "added-text" 
+                                        id="added-text-{{pd.id}}"></span></div>
                                     <img src="{{ asset('images/'~ pd.image)}}" />
                                 </p>
                             </div>
-                        </a>
+                            <p id = "card-footer" style="margin-right:2%;">
+                                <span class="card-text detaille" data-itemid="{{pd.id}}">
+                                    <sub>Détails</sub>
+                                </span>
+                                <span id= "plus-{{pd.id}}" data-itemid="{{pd.id}}" onclick="addItem()">
+                                    <i class="fa-solid fa-plus" data-itemid="{{pd.id}}"></i>
+                                </span>
+                                <span class = "" id="moins-{{pd.id}}" data-itemid="{{pd.id}}">
+                                    <i class="fa-solid fa-minus" onclick="removeItemList()"></i>
+                                </span>
+                            </p>
+                        </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
     </div>
+    <div class="item-dialog">
+    </div>
+    
+{% endblock %}
+{% block javascripts %}
+<script>
+    $(document).ready(function(){
+        addedItemList();
+        $(".detaille").on("click",function(){
+            event.preventDefault();
+            var itemid = $(this).data('itemid');
+            $.ajax({
+                url: '/items/details',
+                type: "POST",
+                data: {'id':itemid},
+                success: function(data){
+                    data = JSON.parse(data);
+                    let div = document.createElement('div');
+                    div.setAttribute('class','dialog-body');
+                    let p1 = document.createElement('p');
+                    let html1 = "Appelation: "+data.name;
+                    p1.innerText = "";
+                    p1.innerText = html1;
+                    let p2 = document.createElement('p');
+                    let html2 = "Composition: "+data.description;
+                    p2.innerText = "";
+                    p2.append(html2);
+                    div.append()
+                    div.append(p1);
+                    div.append(p2);
+                    $(".item-dialog").empty();
+                    $(".item-dialog").append(div);
+
+                    $(".item-dialog").dialog({
+                        modal:true,
+                        width:600,
+                        height:300
+                    })
+                }
+            });
+        });
+    });
+
+    function addItem() {
+        event.preventDefault();
+        let el = event.target;
+        var id = el.getAttribute('data-itemid');
+        var ad_text = document.querySelector("#added-text-"+id);
+        var ad_item = document.querySelector("#added-item-"+id);
+        $.ajax({
+            url:'/panier/add',
+            type: "POST",
+            data: {'id': id},
+            success: function(data) {
+                console.log(data);
+                let regex = /(\d)+/;
+                var q = data.match(regex)[0];
+                if(q > 0) {
+                    ad_text.innerText = q;
+                    ad_item.classList.add('added-item');
+                }
+            }
+        });
+    }
+    function addedItemList() {
+        $.ajax({
+            url:'/panier/item/list',
+            type: "GET",
+            success: function(data) {
+                console.log(data);
+                data = JSON.parse(data);
+                let keys = Object.keys(data);
+                keys.forEach(element=>{ 
+                    document.querySelector('#added-text-'+element).innerHTML = data[element];
+                    document.querySelector("#added-item-"+element).classList.add("added-item");
+                })
+            }
+        });
+
+    }
+    function removeItemList() {
+        var tg = event.target.parentNode;
+        id = tg.getAttribute('id').split("-")[1];
+        $.ajax({
+            url:'/panier/remove/item',
+            type: "POST",
+            data: {'id': id},
+            success: function(data) {
+                console.log(data);
+                let regex = /\d+/;
+                var q = data.match(regex)[0];
+                console.log(document.querySelector('#added-text-'+id));
+                if(q>0) {
+                    document.querySelector('#added-text-'+id).innerText = "";
+                    document.querySelector('#added-text-'+id).innerHTML = q;
+                }
+                if(q==0) {
+                    document.querySelector('#added-text-'+id).innerText = "";
+                    document.querySelector('#added-item-'+id).classList.remove("added-item");
+                }
+
+            }
+        });
+
+    }
+
+</script>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .hide-minus{
+            display: none;
+        }
+        .display-minus{
+            display: block;
+        }
+        #card-footer{
+            display: flex;
+        }
+        .detaille{
+            position: relative;
+            left:2%;
+        }
+        #card-footer span:nth-child(2) {
+            position:absolute;
+            right: 2%;
+            width: 10%;
+            text-align: center;
+            border-radius: 100%;
+            background-color: bisque;
+        }
+        #card-footer span:nth-child(3){
+            position:absolute;
+            right: 20%;
+            width: 10%;
+            text-align: center;
+            border-radius: 100%;
+            background-color: bisque;
+        }
+        .card-body{
+            width: 100%;
+            height: 100%;
+        }
+        .added-item {
+            /*display: none;*/
+            position:absolute;
+            text-align: center;
+            font-size: 3em;
+            width: 90%;
+            height: 60%;
+            background-color: rgba(0,0,0,0.4);
+        }
+        
+        .card-body img{
+            width: 100%;
+            height: 100%;
+        }
+
+        .added-text{
+            position: relative;
+            top:40%;
+            color: white;
+        }
+
+        .detaille sub:hover{
+            background-color: lightblue;
+            border-radius: 50%;
+        }
+    </style>
+
 {% endblock %}

@@ -12,6 +12,7 @@ use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -41,7 +42,7 @@ class ItemsController extends AbstractController
     /**
      * @Route("/items/{id}", name="show_item")
      */
-    public function getItem(Items $item,CommentsRepository $comment): Response
+    /*public function getItem(Items $item,CommentsRepository $comment): Response
     {
         //$comment = $this->getDoctrine()->getRepository(CommentsRepository::class);
         //$item = $repo->findOneById(array('34'));
@@ -67,6 +68,87 @@ class ItemsController extends AbstractController
             'commandes'=>$commandes,
             'notes'=>$notes,
         ]);
+    }*/
+    /**
+     * @Route("/items/details", name="item_details")
+     */
+    public function getDetails(ItemsRepository $irepo, Request $request) {
+        $id = $request->request->get('id');
+        $res = [];
+        $item = $irepo->createQueryBuilder('i')
+            ->select('i')
+            ->where('i.id = :id')
+            ->setParameters([
+                'id'=>intval($id)
+            ])
+            ->getQuery()
+            ->getResult()
+            ;
+        $res['name'] = $item[0]->getName();
+        $res['description'] = $item[0]->getDescription();
+        return new Response(json_encode($res));
+    }
+
+    /**
+     * @Route("/panier/add", name = "add_panier")
+     */
+    public function addProduct(ItemsRepository $itemRepo, RequestStack $requestStack, Request $request)
+    {
+        $id = strval($request->request->get('id'));
+        $session = $requestStack->getSession();
+        if(!$session->has('panier')) {
+            $panier = $session->set('panier',[]);
+        } else {
+            $panier = $session->get('panier');
+        }
+        if(!isset($panier[$id])) {
+            $nb = 1;
+            $panier[$id] = $nb;
+            $session->set('panier', $panier);
+        } else {
+            $nb = $panier[$id]+1;
+            $panier[$id] = $nb;  
+            $session->set('panier', $panier);
+        }
+        $output = [];
+        $output["quantite"] = $panier[$id];
+        return new Response(json_encode($output));
+    }
+
+    /**
+     * @Route("panier/remove/item", name="remove_item")
+     */
+    public function removeItem(Request $request) {
+        $id = strval($request->request->get('id'));
+        
+        $session = $request->getSession();
+        $panier = $session->get('panier');
+
+        if($session->has('panier')) {
+            if(isset($panier[$id])) {
+                $panier[$id] -= 1;
+                $session->set('panier', $panier);
+            }
+            $output = [];
+            $output['quantite'] = $panier[$id];
+            return new Response(json_encode($output));
+        }
+    }
+
+    /**
+     * @Route("/panier/item/list", name="panier_list")
+     */
+    public function addedItemList(RequestStack $requestStack) {
+        $session = $requestStack->getSession();
+        if(!$session->has('panier')) {
+            return new Response("{}");
+        }
+        $panier = $session->get('panier');
+        $keys = [];
+        foreach(array_keys($panier) as $k) {
+            $keys[$k] = $panier[$k];
+        }
+        return new Response(json_encode($keys));
     }
     /**
      * @Route("/panier/voir",name="show_panier")
