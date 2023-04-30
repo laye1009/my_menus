@@ -1,7 +1,7 @@
 # my_menus
-Ceci est un projet personnel. L'objetif est de simuler un fast food qui vend des produits en ligne.  
+Ceci est un projet personnel.  
 Framework: symfony 4.4  
-Base de données: sqlite3
+Base de données: postgresql version 15
 
 # Comment cloner et visualiser ce site
 ## Lancer les commandes suivantes
