@@ -4,7 +4,11 @@ doctrine:
 
         # IMPORTANT: You MUST configure your server version,
         # either here or in the DATABASE_URL env var (see .env file)
+<<<<<<< HEAD
         #server_version: '13'
+=======
+        #server_version: '15'
+>>>>>>> 9bfb396 (reprise30042023)
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
@@ -26,6 +30,10 @@ when@prod:
     doctrine:
         orm:
             auto_generate_proxy_classes: false
+<<<<<<< HEAD
+=======
+            proxy_dir: '%kernel.build_dir%/doctrine/orm/Proxies'
+>>>>>>> 9bfb396 (reprise30042023)
             query_cache_driver:
                 type: pool
                 pool: doctrine.system_cache_pool

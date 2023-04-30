@@ -9,12 +9,23 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
+<<<<<<< HEAD
 ###> symfony/phpunit-bridge ###
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 
+=======
+>>>>>>> 9bfb396 (reprise30042023)
 ###> phpunit/phpunit ###
 /phpunit.xml
 .phpunit.result.cache
 ###< phpunit/phpunit ###
+<<<<<<< HEAD
+=======
+
+###> symfony/phpunit-bridge ###
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+>>>>>>> 9bfb396 (reprise30042023)

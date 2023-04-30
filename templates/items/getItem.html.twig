@@ -13,7 +13,25 @@
                     {{item.description}}
                 </p>
             </div>
+<<<<<<< HEAD
             {% include 'items/panier.html.twig'%}
+=======
+            <div style="margin-top:40px" class="col-3">
+                <p>
+                    <button id="ajout" style="margin-top: 50%;" 
+                    class="btn btn-warning" data-ajout = "{{item.id}}">
+                        Ajouter au panier 
+                    </button>
+                </p>
+                <div id="divnb">
+                    {# <span style="position:absolute;" class="fa fa-shpping-cart"></div> #}
+                    <a href="">
+                        <span id="voir" class="badge badge-warning" data-voir="voir">Voir le panier</span>
+                    </a>
+                    <div id="voirpanier"></div>
+                </div>
+            </div>
+>>>>>>> 9bfb396 (reprise30042023)
         </div>
         <h4 style="margin-bottom:10vh;text-decoration:underline;">Liste des commandes de ce produit</h4>
         {% if commandes is empty %}
@@ -56,6 +74,7 @@
 {% block javascripts %}
 <script>
     $(document).ready(function()
+<<<<<<< HEAD
         {
             if(sessionStorage.getItem('panier'))
             {
@@ -156,6 +175,11 @@
 
             });
         }); // fin ready function
+=======
+        { 
+        }
+    );
+>>>>>>> 9bfb396 (reprise30042023)
 
 </script>
 

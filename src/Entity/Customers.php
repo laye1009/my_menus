@@ -139,7 +139,11 @@ class Customers implements UserInterface
     {
         return $this->email;
     }
+<<<<<<< HEAD
     public function getPassword()
+=======
+    public function getPassword():?string
+>>>>>>> 9bfb396 (reprise30042023)
     {
         return $this->password;
     }
@@ -213,7 +217,11 @@ class Customers implements UserInterface
     }
 
     /* gestion de userinterface*/
+<<<<<<< HEAD
     public function getRoles()
+=======
+    public function getRoles():array
+>>>>>>> 9bfb396 (reprise30042023)
     {
         return ['ROLE_USER'];
     }
@@ -221,8 +229,15 @@ class Customers implements UserInterface
     {
         // leaving blank - I don't need/have a password!
     }*/
+<<<<<<< HEAD
     public function getSalt()
     {}
+=======
+    public function getSalt():?string
+    {
+        return null;
+    }
+>>>>>>> 9bfb396 (reprise30042023)
     public function eraseCredentials()
     {
         // leaving blank - I don't need/have a password!
@@ -232,6 +247,13 @@ class Customers implements UserInterface
         return $this->email;
     }
 
+<<<<<<< HEAD
+=======
+    public function getUserIdentifier(): string {
+        return $this->email;
+    }
+
+>>>>>>> 9bfb396 (reprise30042023)
 
 
 }

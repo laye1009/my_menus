@@ -2,7 +2,11 @@
 
 {% block body %}
     {% if error %}
+<<<<<<< HEAD
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+=======
+        <div class="error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+>>>>>>> 9bfb396 (reprise30042023)
     {% endif %}
     <div class="row">
         <div class="col-3">
