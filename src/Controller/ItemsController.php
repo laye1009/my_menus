@@ -1,11 +1,7 @@
 <?php
 
 namespace App\Controller;
-
-<<<<<<< HEAD
-=======
 use Predis\Client;
->>>>>>> 9bfb396 (reprise30042023)
 use App\Entity\Items;
 use App\Form\ItemsType;
 use App\Entity\Comments;
@@ -13,18 +9,12 @@ use App\Service\UploaderHelper;
 use App\Repository\ItemsRepository;
 use App\Repository\CommentsRepository;
 use Doctrine\Persistence\ObjectManager;
-<<<<<<< HEAD
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-=======
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 use Symfony\Component\HttpFoundation\RequestStack;
->>>>>>> 9bfb396 (reprise30042023)
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -41,19 +31,10 @@ class ItemsController extends AbstractController
     /**
     * @Route("/items", name="home")
     */
-
-<<<<<<< HEAD
-    public function index(ObjectManager $manager, ItemsRepository $itemsrepo): Response
-    {
-        $items = $itemsrepo->findAll();
-        //var_dump($items);die();
-
-=======
     public function index(ObjectManager $manager, ItemsRepository $itemsrepo,RequestStack $request): Response
     {
         //$mail = new Email();
         $items = $itemsrepo->findAll();
->>>>>>> 9bfb396 (reprise30042023)
         return $this->render('items/items.html.twig', [
             'items' => $items,
         ]);
@@ -61,11 +42,8 @@ class ItemsController extends AbstractController
     /**
      * @Route("/items/{id}", name="show_item")
      */
-<<<<<<< HEAD
+
     public function getItem(Items $item,CommentsRepository $comment): Response
-=======
-    /*public function getItem(Items $item,CommentsRepository $comment): Response
->>>>>>> 9bfb396 (reprise30042023)
     {
         //$comment = $this->getDoctrine()->getRepository(CommentsRepository::class);
         //$item = $repo->findOneById(array('34'));
@@ -91,9 +69,7 @@ class ItemsController extends AbstractController
             'commandes'=>$commandes,
             'notes'=>$notes,
         ]);
-<<<<<<< HEAD
-=======
-    }*/
+    }
     /**
      * @Route("/items/details", name="item_details")
      */
@@ -208,8 +184,6 @@ class ItemsController extends AbstractController
             $output['nombre'] = count($request->getSession()->get('panier'));
         }
         return new Response(json_encode($output));
-
->>>>>>> 9bfb396 (reprise30042023)
     }
     /**
      * @Route("/panier/voir",name="show_panier")
@@ -217,35 +191,6 @@ class ItemsController extends AbstractController
 
      public function voirPanier(ItemsRepository $itemRepo,Request $request)
      {
-<<<<<<< HEAD
-        $form = $request->request;
-        $para = $form->get('id');
-        $para = explode(",",$para);
-        $para = array_unique($para);
-        $result=array();
-        /*
-        $output = '<table>
-        <thead>
-        <tr>
-        <th>Name</th><th>Description></th>
-        </tr></thead>';
-        $output.='<tbody>';*/
-        for($i=0;$i<count($para);$i++)
-        {
-            $item = $itemRepo->findOneBy(array('id'=>$para[$i]));
-            //$output.='<tr>';
-            
-            //$item = $itemRepo->findOneBy(array('id'=>$para[$i]));
-            $result[$i]['name']=$item->getName();
-            $result[$i]['description']=$item->getDescription();
-            $result[$i]['prix']=$item->getPrice();
-            /*$output.='<td>'.$item->getName().'</td><td>'.$item->getDescription().'</td>';
-            $output.='</tr>';
-            //$result[$i] = $i; */
-        }
-        /*$output.='</tbody></table>';
-        $result[count($para)]['output'] = $output;*/
-=======
         $panier = $request->getSession()->get('panier');
         $result=array();
 
@@ -260,18 +205,11 @@ class ItemsController extends AbstractController
             $result[$k]['description']=$item->getDescription();
             $result[$k]['prix']=$item->getPrice();
         }
->>>>>>> 9bfb396 (reprise30042023)
         
         //$res=$this->get('normaliser')->normalize($result);
         
         return new Response(json_encode($result));
-<<<<<<< HEAD
-        //return new Response(json_encode($result));
         //return new JsonResponse($res);
-        //var_dump($para);die();
-=======
-        //return new JsonResponse($res);
->>>>>>> 9bfb396 (reprise30042023)
         //echo new JsonResponse($response);
         //return new JsonResponse($response);
      }

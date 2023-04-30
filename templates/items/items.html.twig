@@ -1,11 +1,4 @@
 {% extends 'base.html.twig' %}
-<<<<<<< HEAD
-{% block stylesheets %}
-<link rel='stylesheet' href="{{asset('css/items.css')}} ">
-{% endblock %}
-=======
-
->>>>>>> 9bfb396 (reprise30042023)
 
 {% block title %}Nos produits{% endblock %}
 
@@ -15,22 +8,11 @@
             {% for pd in items %}
                 <div class="col-4">
                     <div class="card mt-5">
-<<<<<<< HEAD
-                        <a href="{{path('show_item',{id:pd.id}) }}">
-=======
                         <div>
->>>>>>> 9bfb396 (reprise30042023)
                             <div class="card-header">
                                 <h5 class="text-center">{{pd.name }}</h5>
                             </div>
                             <div class="card-body">
-<<<<<<< HEAD
-                                <p class="card-text text-center">
-                                    <img src="{{ asset('images/'~ pd.image)}}" />
-                                </p>
-                            </div>
-                        </a>
-=======
                                 <p class="card-text text-center" id = "added-{{pd.id}}">
                                     <div id="added-item-{{pd.id}}"><span class= "added-text" 
                                         id="added-text-{{pd.id}}"></span></div>
@@ -49,15 +31,11 @@
                                 </span>
                             </p>
                         </div>
->>>>>>> 9bfb396 (reprise30042023)
                     </div>
                 </div>
             {% endfor %}
         </div>
     </div>
-<<<<<<< HEAD
-{% endblock %}
-=======
     <div class="item-dialog">
     </div>
     
@@ -283,4 +261,3 @@
     </style>
 
 {% endblock %}
->>>>>>> 9bfb396 (reprise30042023)
