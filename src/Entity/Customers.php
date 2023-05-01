@@ -77,6 +77,13 @@ class Customers implements UserInterface
      */
     private $comments;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="roles", type="json", nullable=true)
+     */
+    private $roles = [];
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
@@ -119,6 +126,12 @@ class Customers implements UserInterface
         $this->joinDate = $fn;
         return $this;
         
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+        return $this;
     }
 
     // getters
@@ -215,7 +228,9 @@ class Customers implements UserInterface
     /* gestion de userinterface*/
     public function getRoles():array
     {
-        return ['ROLE_USER'];
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
+        return array_unique($roles);
     }
     /*public function getPassword()
     {

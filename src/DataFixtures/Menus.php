@@ -106,11 +106,25 @@ class Menus extends Fixture
                 ->setEmail($clients[$i][3])
                 ->setPassword($this->passEncoder->encodePassword($customer,$clients[$i][4]))
                 ->setAvatar($picture)
-                ->setJoinDate($faker->datetime());
+                ->setJoinDate($faker->datetime())
+                ->setRoles(['ROLE_USER'])
+                ;
             $customers[] = $customer;
             $manager->persist($customer);
             $manager->flush();
         }
+
+        $admin = new Customers();
+        $admin->setFirstName("laye")
+        ->setLastName("zen")
+        ->setEmail("layezen@gmail.com")
+        ->setPassword($this->passEncoder->encodePassword($admin,'admin'))
+        ->setAvatar('admin')
+        ->setJoinDate($faker->datetime())
+        ->setRoles(['ROLE_ADMIN'])
+        ;            
+        $manager->persist($admin);
+        $manager->flush();
 
         $items = [];
         for($i=0;$i<count($pdts);$i++) {

@@ -8,6 +8,6 @@ Base de données: postgresql version 15
 1- git clone  
 2- composer install  
 3- Création de la base de données  
-php bin.console doctrine:datatbase:create  
+php bin/console doctrine:datatbase:create  
 4: Charger la base de données avec les fixtures  
 php bin/console doctrine:fixtures:load  
